@@ -23,18 +23,20 @@
     </table>
 </div>
 
-<table class="cacheview-report" id="cacheview-report">
-    <thead>
-        <tr>
+<div class="grid">
+    <table class="cacheview-report data" id="cacheview-report">
+        <thead>
+        <tr class="headings">
             <th>Cache ID</th>
             <th>Last Modified</th>
             <th>Expires</th>
             <th>Lifetime</th>
             <th>Size</th>
             <th>Tags</th>
+            <th>Actions</th>
         </tr>
-    </thead>
-    <tbody>
+        </thead>
+        <tbody>
         <?php $now = time() ?>
         <?php foreach ($this->getCacheItems() as $item): ?>
             <?php /** @var Meanbee_CacheViewer_Model_CacheItemInfo $item */ ?>
@@ -54,8 +56,9 @@
                 <td colspan="7" class="code" style="display: none;">Loading..</td>
             </tr>
         <?php endforeach ?>
-    </tbody>
-</table>
+        </tbody>
+    </table>
+</div>
 
 <script type="text/javascript">
     function loadCacheData(cache_id, cache_view_id) {

@@ -1,7 +1,3 @@
-.cacheview-report td, .cacheview-report th {
-    padding: 2px;
-}
-
 .cacheview-report .code {
     font-family: consolas, "courier new", courier;
     background: #eee;
@@ -18,11 +14,12 @@
 }
 
 .cacheview-report .col-actions, .cacheview-report .col-modified, .cacheview-report .col-expires {
-    min-width: 200px;
+    padding: 0 2px;
+    white-space: nowrap;
 }
 
 .cacheview-report .col-actions {
-    text-align: right;
+    text-align: center;
 }
 
 .cacheview-report tr:hover {
