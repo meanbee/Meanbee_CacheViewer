@@ -21,20 +21,20 @@
         <?php $now = time() ?>
         <?php foreach ($this->getCacheItems() as $item): ?>
             <?php /** @var Meanbee_CacheViewer_Model_CacheItemInfo $item */ ?>
-            <tr id="cache_<?php echo $item->getId() ?>">
+            <tr id="cache_<?php echo $item->getId() ?>" onclick="return loadCacheData('<?php echo $item->getId() ?>', 'cache_<?php echo $item->getId() ?>_view')">
                 <td class="col-id"><?php echo $item->getId() ?></td>
                 <td class="col-modified"><?php echo $this->formatDate($item->getModified(), Mage_Core_Model_Locale::FORMAT_TYPE_SHORT, true) ?></td>
                 <td class="col-expires"><?php echo $this->formatDate($item->getExpires(), Mage_Core_Model_Locale::FORMAT_TYPE_SHORT, true) ?></td>
                 <td class="col-lifetime"><?php echo $this->getAsTimeUnits($item->getLifetime($now)) ?></td>
                 <td class="col-size"><?php printf("%.2f", $item->getSizeAsKb()) ?>kb</td>
-                <td class="col-tags"><?php echo join(', ', $item->getTags()) ?></td>
+                <td class="col-tags"><?php echo join('<br />', $item->getTags()) ?></td>
                 <td class="col-actions">
                     <a href="#" onclick="return loadCacheData('<?php echo $item->getId() ?>', 'cache_<?php echo $item->getId() ?>_view')">Toggle View</a>
                     <a href="#" onclick="return deleteCacheData('<?php echo $item->getId() ?>')">Delete Item</a>
                 </td>
             </tr>
             <tr id="cache_<?php echo $item->getId() ?>_view">
-                <td colspan="6" class="code" style="display: none;">Loading..</td>
+                <td colspan="7" class="code" style="display: none;">Loading..</td>
             </tr>
         <?php endforeach ?>
     </tbody>

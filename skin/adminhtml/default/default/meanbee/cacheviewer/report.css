@@ -27,4 +27,5 @@
 
 .cacheview-report tr:hover {
     background: #eee;
+    cursor: pointer;
 }
