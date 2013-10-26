@@ -41,7 +41,7 @@
                     <cache>
                         <children>
                             <cacheviewer translate="title">
-                                <title>View Cache Statistics</title>
+                                <title>View Cache</title>
                                 <action>adminhtml/meanbee_cacheviewer/report</action>
                                 <sort_order>10</sort_order>
                             </cacheviewer>
