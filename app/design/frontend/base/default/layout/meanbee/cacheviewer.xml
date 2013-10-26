@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<layout>
+    <default>
+        <reference name="head">
+            <action method="addItem">
+                <type>skin_css</type>
+                <name>meanbee/cacheviewer/block.css</name>
+            </action>
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>meanbee/cacheviewer/block.js</name>
+            </action>
+        </reference>
+
+        <reference name="before_body_end">
+            <block type="core/template" name="meanbee.cacheviewer.toolbar" template="meanbee/cacheviewer/toolbar.phtml" ifconfig="cacheviewer/blocks/view_frontend"/>
+        </reference>
+    </default>
+</layout>

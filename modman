@@ -2,5 +2,8 @@ app/etc/modules/* app/etc/modules/
 app/code/community/Meanbee/* app/code/community/Meanbee/
 app/design/adminhtml/default/default/layout/meanbee/ app/design/adminhtml/default/default/layout/meanbee
 app/design/adminhtml/default/default/template/meanbee/ app/design/adminhtml/default/default/template/meanbee
-skin/adminhtml/default/default/meanbee/cacheviewer/ skin/adminhtml/default/default/meanbee/cacheviewer
+app/design/frontend/base/default/layout/meanbee/ app/design/frontend/base/default/layout/meanbee
+app/design/frontend/base/default/template/meanbee/ app/design/frontend/base/default/template/meanbee
+skin/adminhtml/default/default/meanbee/cacheviewer skin/adminhtml/default/default/meanbee/cacheviewer
+skin/frontend/base/default/meanbee/cacheviewer skin/frontend/base/default/meanbee/cacheviewer
 #var/connect/Meanbee_CacheViewer.xml var/connect/Meanbee_CacheViewer.xml

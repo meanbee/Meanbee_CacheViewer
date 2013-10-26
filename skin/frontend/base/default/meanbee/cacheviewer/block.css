@@ -1,0 +1,61 @@
+/**
+ * This file is duplicated in adminhtml/frontend
+ */
+.cacheviewer-container {
+    position: relative;
+    zoom: 1;
+}
+
+.cacheviewer-block {
+    background: rgba(190,17,17, 0.3);
+    bottom:0;
+    color: white;
+    display: none;
+    font-size: 11px;
+    left: 0;
+    position: absolute;
+    right:0;
+    text-align: left;
+    text-shadow: 0 1px #333;
+    top: 0;
+    z-index: 998;
+}
+
+.cacheviewer-block.enabled {
+    display: block;
+}
+
+.cacheviewer-block .cacheviewer-name {
+    float: right;
+}
+
+.cacheviewer-block .cacheviewer-hints {
+    display: none;
+}
+
+.cacheviewer-block .cacheviewer-hints.enabled {
+    display: block;
+}
+
+.cacheviewer-block-cached {
+    background: rgba(27,190,17, 0.3);
+}
+
+.cacheviewer-toolbar {
+    background: white;
+    border-top: 1px solid #666;
+    bottom: 0;
+    padding: 10px 0;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+.cacheviewer-toolbar h3,
+.cacheviewer-toolbar .cacheviewer-controls,
+.cacheviewer-toolbar .cacheviewer-control {
+    float: left;
+    line-height: 20px;
+    margin: 0;
+    padding: 0 5px;
+}
