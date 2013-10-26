@@ -4,6 +4,7 @@
 
 <div class="cacheview-stats">
     <h1>Cache Backend: <?php echo $this->getCacheBackend() ?></h1>
+    <p>Cache Size: <?php printf("%.2f", $this->getUsedCacheSizeInMb()) ?>mb</p>
 </div>
 
 <table class="cacheview-report" id="cacheview-report">
