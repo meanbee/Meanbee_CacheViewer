@@ -19,13 +19,17 @@
         <?php $now = time() ?>
         <?php foreach ($this->getCacheItems() as $item): ?>
             <?php /** @var Meanbee_CacheViewer_Model_CacheItemInfo $item */ ?>
-            <tr>
+            <tr id="cache_<?php echo $item->getId() ?>">
                 <td><?php echo $item->getId() ?></td>
                 <td><?php echo $this->formatDate($item->getModified(), Mage_Core_Model_Locale::FORMAT_TYPE_SHORT, true) ?></td>
                 <td><?php echo $this->formatDate($item->getExpires(), Mage_Core_Model_Locale::FORMAT_TYPE_SHORT, true) ?></td>
                 <td><?php echo $this->getAsTimeUnits($item->getLifetime($now)) ?></td>
                 <td><?php printf("%.2f", $item->getSizeAsKb()) ?>kb</td>
                 <td><?php echo join(', ', $item->getTags()) ?></td>
+                <td><a href="#" onclick="return loadCacheData('<?php echo $item->getId() ?>', 'cache_<?php echo $item->getId() ?>_view')">View</a></td>
+            </tr>
+            <tr id="cache_<?php echo $item->getId() ?>_view">
+                <td colspan="6" class="code" style="display: none;">Loading..</td>
             </tr>
         <?php endforeach ?>
     </tbody>
@@ -35,4 +39,27 @@
     .cacheview-report td, .cacheview-report th {
         padding: 2px;
     }
+
+    .cacheview-report .code {
+        font-family: consolas, "courier new", courier;
+        background: #eee;
+        border: 1px #ccc solid;
+        padding: 2px;
+    }
 </style>
+
+<script type="text/javascript">
+    function loadCacheData(cache_id, cache_view_id) {
+        var cache_view_el = $$('#' + cache_view_id + ' td').first();
+        cache_view_el.show();
+
+        new Ajax.Request('<?php echo $this->getUrl('adminhtml/meanbee_cacheviewer/view_single') ?>?cache_id='+cache_id, {
+            method: 'post',
+            onSuccess: function (response) {
+                cache_view_el.innerHTML = response.responseText;
+            }
+        });
+
+        return false;
+    }
+</script>
