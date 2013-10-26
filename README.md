@@ -1,12 +1,23 @@
 # Meanbee_CacheViewer
 
-Meanbee_CacheViewer provides an admin accessible interface for inspecting the contents of your Magento, regardless of cache adapter used.
+Meanbee_CacheViewer provides interfaces for inspecting Magento cache.
 
 ## Usage
 
-The cache contents interface can be found by visiting the adminstration area and navigating to `System` > `Cache Management` > `View Cache`.
+### Frontend
 
-For this interface you can see the cache entries that are present, and inspect or delete particular entries.
+Enabled with a configuration setting in `System` > `Configuration` > `Cache Viewer`, the frontend overlay indicates
+which blocks were generated (red) and which were retrieved from the block_html cache (green) as well as showing the
+last modified time for each block and the total time taken to dispatch the request.
+
+![Cache Viewer frontend overlay](http://f.cl.ly/items/0F2D0s3c0I34210z1e3S/cache-viewer-frontend.png)
+
+![Cache Viewer frontend overlay with hints disabled](http://f.cl.ly/items/0N2t3R0R2a232R3w191L/cache-viewer-frontend-nohints.png)
+
+### Backend
+
+The backend interface, found in `System` > `Cache Management` > `View Cache` in the Administration area, allows
+viewing, inspecting or deleting all of the cache entries present in the Magento cache.
 
 ![Cache Viewer](http://up.nicksays.co.uk/image/0C1W29041R3y/release_0.1.0.png)
 
