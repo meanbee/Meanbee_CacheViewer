@@ -26,12 +26,12 @@ class Meanbee_CacheViewer_Model_Observer extends Mage_Core_Model_Abstract {
             return;
         }
 
-
         // Get cache status
         $cache = Mage::app()->getCache()->test(strtoupper($block->getCacheKey()));
         $lastModified = date(DATE_ATOM, time());
         $blockName = get_class($block);
         $cacheClass = "";
+
 
         // If cached, get last modified date and add cached class for css.
         if($cache) {
@@ -43,7 +43,7 @@ class Meanbee_CacheViewer_Model_Observer extends Mage_Core_Model_Abstract {
         $html = $transportObject->getHtml();
         $html = <<<HTML
 <div class="cacheviewer-container clearer">
-    <div class="cacheviewer-block{$cacheClass}" onmouseover="this.style.zIndex='999'" onmouseout="this.style.zIndex='998'">
+    <div class="cacheviewer-block{$cacheClass}">
         <div class="cacheviewer-hints">
             <span class="cacheviewer-lastmodified">{$lastModified}</span>
             <span class="cacheviewer-name">{$blockName}</span>
