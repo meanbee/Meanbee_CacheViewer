@@ -1,13 +1,18 @@
 <?php /** @var Meanbee_CacheViewer_Block_Adminhtml_Report $this */ ?>
-<table>
+
+<h1>Cache Size: <?php printf("%.2f", $this->getCacheSizeInMb()) ?>mb</h1>
+<h1>Percentage Full: <?php echo $this->getCacheFullPercentage() ?>%</h1>
+<h1>Cache Backend: <?php echo $this->getCacheBackend() ?></h1>
+
+<table class="cacheview-report">
     <thead>
         <tr>
             <th>Cache ID</th>
             <th>Last Modified</th>
             <th>Expires</th>
             <th>Lifetime</th>
-            <th>Tags</th>
             <th>Size</th>
+            <th>Tags</th>
         </tr>
     </thead>
     <tbody>
@@ -19,9 +24,15 @@
                 <td><?php echo $this->formatDate($item->getModified(), Mage_Core_Model_Locale::FORMAT_TYPE_SHORT, true) ?></td>
                 <td><?php echo $this->formatDate($item->getExpires(), Mage_Core_Model_Locale::FORMAT_TYPE_SHORT, true) ?></td>
                 <td><?php echo $this->getAsTimeUnits($item->getLifetime($now)) ?></td>
-                <td><?php echo join(', ', $item->getTags()) ?></td>
                 <td><?php printf("%.2f", $item->getSizeAsKb()) ?>kb</td>
+                <td><?php echo join(', ', $item->getTags()) ?></td>
             </tr>
         <?php endforeach ?>
     </tbody>
 </table>
+
+<style type="text/css">
+    .cacheview-report td, .cacheview-report th {
+        padding: 2px;
+    }
+</style>
