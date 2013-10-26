@@ -1,10 +1,12 @@
 <?php /** @var Meanbee_CacheViewer_Block_Adminhtml_Report $this */ ?>
 
-<h1>Cache Size: <?php printf("%.2f", $this->getCacheSizeInMb()) ?>mb</h1>
-<h1>Percentage Full: <?php echo $this->getCacheFullPercentage() ?>%</h1>
-<h1>Cache Backend: <?php echo $this->getCacheBackend() ?></h1>
+<div id="piechart_3d" class="cacheview-piechart" style="width: 300px; height: 300px;"></div>
 
-<table class="cacheview-report">
+<div class="cacheview-stats">
+    <h1>Cache Backend: <?php echo $this->getCacheBackend() ?></h1>
+</div>
+
+<table class="cacheview-report" id="cacheview-report">
     <thead>
         <tr>
             <th>Cache ID</th>
@@ -20,13 +22,16 @@
         <?php foreach ($this->getCacheItems() as $item): ?>
             <?php /** @var Meanbee_CacheViewer_Model_CacheItemInfo $item */ ?>
             <tr id="cache_<?php echo $item->getId() ?>">
-                <td><?php echo $item->getId() ?></td>
-                <td><?php echo $this->formatDate($item->getModified(), Mage_Core_Model_Locale::FORMAT_TYPE_SHORT, true) ?></td>
-                <td><?php echo $this->formatDate($item->getExpires(), Mage_Core_Model_Locale::FORMAT_TYPE_SHORT, true) ?></td>
-                <td><?php echo $this->getAsTimeUnits($item->getLifetime($now)) ?></td>
-                <td><?php printf("%.2f", $item->getSizeAsKb()) ?>kb</td>
-                <td><?php echo join(', ', $item->getTags()) ?></td>
-                <td><a href="#" onclick="return loadCacheData('<?php echo $item->getId() ?>', 'cache_<?php echo $item->getId() ?>_view')">View</a></td>
+                <td class="col-id"><?php echo $item->getId() ?></td>
+                <td class="col-modified"><?php echo $this->formatDate($item->getModified(), Mage_Core_Model_Locale::FORMAT_TYPE_SHORT, true) ?></td>
+                <td class="col-expires"><?php echo $this->formatDate($item->getExpires(), Mage_Core_Model_Locale::FORMAT_TYPE_SHORT, true) ?></td>
+                <td class="col-lifetime"><?php echo $this->getAsTimeUnits($item->getLifetime($now)) ?></td>
+                <td class="col-size"><?php printf("%.2f", $item->getSizeAsKb()) ?>kb</td>
+                <td class="col-tags"><?php echo join(', ', $item->getTags()) ?></td>
+                <td class="col-actions">
+                    <a href="#" onclick="return loadCacheData('<?php echo $item->getId() ?>', 'cache_<?php echo $item->getId() ?>_view')">Toggle View</a>
+                    <a href="#" onclick="return deleteCacheData('<?php echo $item->getId() ?>')">Delete Item</a>
+                </td>
             </tr>
             <tr id="cache_<?php echo $item->getId() ?>_view">
                 <td colspan="6" class="code" style="display: none;">Loading..</td>
@@ -46,20 +51,77 @@
         border: 1px #ccc solid;
         padding: 2px;
     }
+
+    .cacheview-report {
+        clear: both;
+    }
+
+    .cacheview-piechart, .cacheview-stats {
+        float: left;
+    }
+
+    .cacheview-report .col-actions, .cacheview-report .col-modified, .cacheview-report .col-expires {
+        min-width: 200px;
+    }
+
+    .cacheview-report .col-actions {
+        text-align: right;
+    }
+
+    .cacheview-report tr:hover {
+        background: #eee;
+    }
 </style>
 
 <script type="text/javascript">
     function loadCacheData(cache_id, cache_view_id) {
         var cache_view_el = $$('#' + cache_view_id + ' td').first();
-        cache_view_el.show();
+        cache_view_el.toggle();
 
-        new Ajax.Request('<?php echo $this->getUrl('adminhtml/meanbee_cacheviewer/view_single') ?>?cache_id='+cache_id, {
-            method: 'post',
-            onSuccess: function (response) {
-                cache_view_el.innerHTML = response.responseText;
-            }
-        });
+        if (cache_view_el.style.display != 'none') {
+            new Ajax.Request('<?php echo $this->getUrl('adminhtml/meanbee_cacheviewer/view_single') ?>?cache_id='+cache_id, {
+                method: 'post',
+                onSuccess: function (response) {
+                    cache_view_el.innerHTML = response.responseText;
+                }
+            });
+        }
+
+        return false;
+    }
+
+    function deleteCacheData(cache_id) {
+        if (confirm('Are you sure you want to delete this cache item?')) {
+            new Ajax.Request('<?php echo $this->getUrl('adminhtml/meanbee_cacheviewer/delete_single') ?>?cache_id='+cache_id, {
+                method: 'post',
+                onSuccess: function () {
+                    window.location.reload()
+                }
+            });
+        }
 
         return false;
     }
 </script>
+
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+    google.load("visualization", "1", {packages:["corechart"]});
+    google.setOnLoadCallback(function () {
+        var data = google.visualization.arrayToDataTable([
+            ['Cache', 'Percentage'],
+            ['Used (<?php printf("%.2f", $this->getUsedCacheSizeInMb()) ?>mb)', <?php echo $this->getCacheFullPercentage() ?>],
+            ['Free', 100 - <?php echo $this->getCacheFullPercentage() ?>]
+        ]);
+
+        var options = {
+            title: 'Reported Cache Usage',
+            legend: 'none',
+            is3D: true
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
+        chart.draw(data, options);
+    });
+</script>
+

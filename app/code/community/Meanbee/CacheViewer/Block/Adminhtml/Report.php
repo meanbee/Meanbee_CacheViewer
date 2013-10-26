@@ -83,13 +83,21 @@ class Meanbee_CacheViewer_Block_Adminhtml_Report extends Mage_Adminhtml_Block_Te
     /**
      * @return int
      */
-    public function getCacheSizeInMb()
+    public function getUsedCacheSizeInMb()
     {
         if ($this->_total_cache_size_bytes === null) {
             $this->getCacheItems();
         }
 
         return ($this->_total_cache_size_bytes / 1024 / 1024);
+    }
+
+    /**
+     * @return int
+     */
+    public function getTotalCacheSizeInMb()
+    {
+        return ($this->getUsedCacheSizeInMb() / $this->getCacheFullPercentage()) * 100;
     }
 
     /**
