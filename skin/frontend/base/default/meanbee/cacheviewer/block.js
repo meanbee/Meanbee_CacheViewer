@@ -18,6 +18,11 @@ document.observe("dom:loaded", function() {
         toggleCacheViewerHints($('cacheviewer-hints'));
     }
 
+    if (Mage.Cookies.get("cacheviewer_dispatch_time")) {
+        $('cacheviewer-dispatch-time').update("<span>Dispatch time:</span>" + Mage.Cookies.get("cacheviewer_dispatch_time"));
+        Mage.Cookies.clear("cacheviewer_dispatch_time");
+    }
+
 });
 
 

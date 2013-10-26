@@ -30,6 +30,24 @@
                     </cacheviewer_hints_block_after>
                 </observers>
             </core_block_abstract_to_html_after>
+            <controller_action_predispatch>
+                <observers>
+                    <cacheviewer_pre_dispatch>
+                        <type>singleton</type>
+                        <class>cacheviewer/observer</class>
+                        <method>startTimer</method>
+                    </cacheviewer_pre_dispatch>
+                </observers>
+            </controller_action_predispatch>
+            <controller_action_postdispatch>
+                <observers>
+                    <cacheviewer_post_dispatch>
+                        <type>singleton</type>
+                        <class>cacheviewer/observer</class>
+                        <method>stopTimer</method>
+                    </cacheviewer_post_dispatch>
+                </observers>
+            </controller_action_postdispatch>
         </events>
     </global>
 

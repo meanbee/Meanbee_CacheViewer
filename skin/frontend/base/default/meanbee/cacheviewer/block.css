@@ -59,3 +59,19 @@
     margin: 0;
     padding: 0 5px;
 }
+
+.cacheviewer-toolbar .right {
+    float: right;
+    padding: 0 5px;
+}
+
+.cacheviewer-toolbar .right li {
+    display: inline-block;
+    line-height: 20px;
+    padding: 0 5px;
+}
+
+#cacheviewer-dispatch-time span {
+    font-weight: bold;
+    padding: 0 5px 0 0;
+}

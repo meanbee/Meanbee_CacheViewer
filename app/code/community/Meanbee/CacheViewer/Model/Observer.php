@@ -5,6 +5,17 @@ class Meanbee_CacheViewer_Model_Observer extends Mage_Core_Model_Abstract {
     const EVENT_BEFORE = 'core_block_abstract_to_html_before';
     const EVENT_AFTER  = 'core_block_abstract_to_html_after';
 
+    /** @var Meanbee_CacheViewer_Helper_Data */
+    protected $_helper;
+
+    protected $_dispatch_start_time;
+
+    public function _construct() {
+        parent::_construct();
+
+        $this->_helper = Mage::helper('cacheviewer');
+    }
+
     /**
      * Add cache block status
      * @param Varien_Event_Observer $observer
@@ -15,10 +26,7 @@ class Meanbee_CacheViewer_Model_Observer extends Mage_Core_Model_Abstract {
         $block = $event->getBlock();
         $transportObject = $event->getTransport();
 
-        /** @var Meanbee_CacheViewer_Helper_Data $helper */
-        $helper = Mage::helper('cacheviewer');
-
-        if (!$helper->isShowCacheStatusOnFrontend()) {
+        if (!$this->_helper->isShowCacheStatusOnFrontend()) {
             return;
         }
 
@@ -56,5 +64,30 @@ HTML;
         $transportObject->setHtml($html);
 
         return;
+    }
+
+    /**
+     * Start the timer for tracking dispatch time.
+     * Observe: controller_action_predispatch
+     *
+     * @param Varien_Event_Observer $observer
+     */
+    public function startTimer(Varien_Event_Observer $observer) {
+        $this->_dispatch_start_time = microtime(true);
+    }
+
+    /**
+     * Stop the timer tracking dispatch time and set the elapsed time in a cookie.
+     *
+     * @param Varien_Event_Observer $observer
+     */
+    public function stopTimer(Varien_Event_Observer $observer) {
+        $dispatch_finish_time = microtime(true);
+
+        $elapsed_time = $dispatch_finish_time - $this->_dispatch_start_time;
+
+        if ($this->_helper->isShowCacheStatusOnFrontend()) {
+            Mage::getSingleton('core/cookie')->set("cacheviewer_dispatch_time", sprintf("%.3fs", $elapsed_time), 0, null, null, null, false);
+        }
     }
 }
