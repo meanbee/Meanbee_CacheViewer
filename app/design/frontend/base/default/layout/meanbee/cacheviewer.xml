@@ -13,7 +13,7 @@
         </reference>
 
         <reference name="before_body_end">
-            <block type="core/template" name="meanbee.cacheviewer.toolbar" template="meanbee/cacheviewer/toolbar.phtml" ifconfig="cacheviewer/blocks/view_frontend"/>
+            <block type="cacheviewer/toolbar" name="meanbee.cacheviewer.toolbar" template="meanbee/cacheviewer/toolbar.phtml" />
         </reference>
     </default>
 </layout>
