@@ -5,6 +5,8 @@
 <div class="cacheview-stats">
     <h1>Cache Backend: <?php echo $this->getCacheBackend() ?></h1>
     <p>Cache Size: <?php printf("%.2f", $this->getUsedCacheSizeInMb()) ?>mb</p>
+
+    <?php print_r($this->getCacheStatistics()) ?>
 </div>
 
 <table class="cacheview-report" id="cacheview-report">
@@ -76,9 +78,10 @@
     google.load("visualization", "1", {packages:["corechart"]});
     google.setOnLoadCallback(function () {
         var data = google.visualization.arrayToDataTable([
-            ['Cache', 'Percentage'],
-            ['Used (<?php printf("%.2f", $this->getUsedCacheSizeInMb()) ?>mb)', <?php echo $this->getCacheFullPercentage() ?>],
-            ['Free', 100 - <?php echo $this->getCacheFullPercentage() ?>]
+            ['Cache Type', 'Usage'],
+            <?php foreach ($this->getCacheStatistics() as $name => $value): ?>
+                ['<?php echo $name ?>', <?php echo $value ?>],
+            <?php endforeach ?>
         ]);
 
         var options = {

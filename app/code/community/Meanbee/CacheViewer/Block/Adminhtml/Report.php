@@ -2,6 +2,21 @@
 class Meanbee_CacheViewer_Block_Adminhtml_Report extends Mage_Adminhtml_Block_Template
 {
     public $_total_cache_size_bytes = null;
+    public $_cache_items = array();
+    public $_cache_types = array(
+        "Block HTML" => array(
+            "/BLOCK_HTML$/"
+        ),
+        "Locale Data" => array(
+            "/Zend_Locale$/"
+        ),
+        "Layout" => array(
+            "/LAYOUT_GENERAL_/"
+        ),
+        "Configuration" => array(
+            "/CONFIG$/"
+        )
+    );
 
     public function _construct()
     {
@@ -14,34 +29,38 @@ class Meanbee_CacheViewer_Block_Adminhtml_Report extends Mage_Adminhtml_Block_Te
 
     public function getCacheItems()
     {
-        $this->_total_cache_size_bytes = 0;
+        if (count($this->_cache_items) == 0) {
+            $this->_total_cache_size_bytes = 0;
 
-        $cache_items = array();
+            $cache_items = array();
 
-        foreach ($this->_getCache()->getIds() as $cache_id) {
-            $meta_data = $this->_getCache()->getMetadatas($cache_id);
+            foreach ($this->_getCache()->getIds() as $cache_id) {
+                $meta_data = $this->_getCache()->getMetadatas($cache_id);
 
-            $expires = (int) $meta_data['expire'];
-            $mtime = (int) $meta_data['mtime'];
+                $expires = (int) $meta_data['expire'];
+                $mtime = (int) $meta_data['mtime'];
 
-            $bytes = strlen($this->_getCache()->load($cache_id));
+                $bytes = strlen($this->_getCache()->load($cache_id));
 
-            $tags = $meta_data['tags'];
+                $tags = $meta_data['tags'];
 
-            $cache_item = Mage::getModel('cacheviewer/cacheItemInfo');
+                $cache_item = Mage::getModel('cacheviewer/cacheItemInfo');
 
-            $cache_item->setId($cache_id);
-            $cache_item->setExpires($expires);
-            $cache_item->setModified($mtime);
-            $cache_item->setSize($bytes);
-            $cache_item->setTags($tags);
+                $cache_item->setId($cache_id);
+                $cache_item->setExpires($expires);
+                $cache_item->setModified($mtime);
+                $cache_item->setSize($bytes);
+                $cache_item->setTags($tags);
 
-            $this->_total_cache_size_bytes += $bytes;
+                $this->_total_cache_size_bytes += $bytes;
 
-            $cache_items[] = $cache_item;
+                $cache_items[] = $cache_item;
+            }
+
+            $this->_cache_items = $cache_items;
         }
 
-        return $cache_items;
+        return $this->_cache_items;
     }
 
     /**
@@ -114,5 +133,39 @@ class Meanbee_CacheViewer_Block_Adminhtml_Report extends Mage_Adminhtml_Block_Te
     public function getCacheBackend()
     {
         return get_class($this->_getCache()->getBackend());
+    }
+
+    public function getCacheStatistics()
+    {
+        $cache_tag_sizes = array();
+
+        foreach ($this->getCacheItems() as $cache_item) {
+            $matched = false;
+
+            /** @var Meanbee_CacheViewer_Model_CacheItemInfo $cache_item */
+            foreach ($this->_cache_types as $cache_tag_category => $cache_tag_regexes) {
+
+                if (!isset($cache_tag_sizes[$cache_tag_category])) {
+                    $cache_tag_sizes[$cache_tag_category] = 0;
+                }
+
+                foreach ($cache_tag_regexes as $cache_tag_regex) {
+                    foreach ($cache_item->getTags() as $cache_item_tag) {
+                        if (preg_match($cache_tag_regex, $cache_item_tag)) {
+                            $cache_tag_sizes[$cache_tag_category] +=  $cache_item->getSize();
+                            $matched = true;
+
+                            break(2);
+                        }
+                    }
+                }
+            }
+
+            if (!$matched) {
+                $cache_tag_sizes["Other"] = $cache_item->getSize();
+            }
+        }
+
+        return $cache_tag_sizes;
     }
 }
