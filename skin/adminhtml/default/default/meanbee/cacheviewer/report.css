@@ -1,0 +1,30 @@
+.cacheview-report td, .cacheview-report th {
+    padding: 2px;
+}
+
+.cacheview-report .code {
+    font-family: consolas, "courier new", courier;
+    background: #eee;
+    border: 1px #ccc solid;
+    padding: 2px;
+}
+
+.cacheview-report {
+    clear: both;
+}
+
+.cacheview-piechart, .cacheview-stats {
+    float: left;
+}
+
+.cacheview-report .col-actions, .cacheview-report .col-modified, .cacheview-report .col-expires {
+    min-width: 200px;
+}
+
+.cacheview-report .col-actions {
+    text-align: right;
+}
+
+.cacheview-report tr:hover {
+    background: #eee;
+}

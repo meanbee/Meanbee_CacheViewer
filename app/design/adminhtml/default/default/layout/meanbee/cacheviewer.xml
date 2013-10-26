@@ -1,8 +1,27 @@
 <?xml version="1.0"?>
 <layout>
     <adminhtml_meanbee_cacheviewer_report>
+        <reference name="head">
+            <action method="addItem">
+                <type>skin_css</type>
+                <name>meanbee/cacheviewer/report.css</name>
+            </action>
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>meanbee/cacheviewer/report.js</name>
+            </action>
+        </reference>
+
         <reference name="content">
-            <block type="cacheviewer/adminhtml_report" name="meanbee.cacheviewer.report" template="meanbee/cacheviewer/report.phtml" />
+            <block type="core/text" name="meanbee.cacheviewer.google.api" after="-">
+                <action method="setText">
+                    <text><![CDATA[<script type="text/javascript" src="https://www.google.com/jsapi"></script>]]></text>
+                </action>
+            </block>
+        </reference>
+
+        <reference name="content">
+            <block type="cacheviewer/adminhtml_report" name="meanbee.cacheviewer.report" template="meanbee/cacheviewer/report.phtml"/>
         </reference>
     </adminhtml_meanbee_cacheviewer_report>
 </layout>
