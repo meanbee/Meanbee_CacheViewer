@@ -21,19 +21,35 @@
             </cacheviewer>
         </helpers>
     </global>
-    <frontend>
+
+    <admin>
         <routers>
-            <cacheviewer>
-                <use>standard</use>
+            <adminhtml>
                 <args>
-                    <frontName>cacheviewer</frontName>
-                    <module>Meanbee_CacheViewer</module>
+                    <modules>
+                        <cacheviewer before="Mage_Adminhtml">Meanbee_CacheViewer_Adminhtml</cacheviewer>
+                    </modules>
                 </args>
-            </cacheviewer>
+            </adminhtml>
         </routers>
-    </frontend>
+    </admin>
 
     <adminhtml>
+        <menu>
+            <system>
+                <children>
+                    <cache>
+                        <children>
+                            <cacheviewer translate="title">
+                                <title>View Cache Statistics</title>
+                                <action>adminhtml/meanbee_cacheviewer/report</action>
+                                <sort_order>10</sort_order>
+                            </cacheviewer>
+                        </children>
+                    </cache>
+                </children>
+            </system>
+        </menu>
         <acl>
             <resources>
                 <admin>
@@ -53,6 +69,14 @@
                 </admin>
             </resources>
         </acl>
+
+        <layout>
+            <updates>
+                <cacheviewer>
+                    <file>meanbee/cacheviewer.xml</file>
+                </cacheviewer>
+            </updates>
+        </layout>
     </adminhtml>
 
     <default>

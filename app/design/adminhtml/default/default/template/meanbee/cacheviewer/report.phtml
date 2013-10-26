@@ -1,0 +1,27 @@
+<?php /** @var Meanbee_CacheViewer_Block_Adminhtml_Report $this */ ?>
+<table>
+    <thead>
+        <tr>
+            <th>Cache ID</th>
+            <th>Last Modified</th>
+            <th>Expires</th>
+            <th>Lifetime</th>
+            <th>Tags</th>
+            <th>Size</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php $now = time() ?>
+        <?php foreach ($this->getCacheItems() as $item): ?>
+            <?php /** @var Meanbee_CacheViewer_Model_CacheItemInfo $item */ ?>
+            <tr>
+                <td><?php echo $item->getId() ?></td>
+                <td><?php echo $this->formatDate($item->getModified(), Mage_Core_Model_Locale::FORMAT_TYPE_SHORT, true) ?></td>
+                <td><?php echo $this->formatDate($item->getExpires(), Mage_Core_Model_Locale::FORMAT_TYPE_SHORT, true) ?></td>
+                <td><?php echo $this->getAsTimeUnits($item->getLifetime($now)) ?></td>
+                <td><?php echo join(', ', $item->getTags()) ?></td>
+                <td><?php printf("%.2f", $item->getSizeAsKb()) ?>kb</td>
+            </tr>
+        <?php endforeach ?>
+    </tbody>
+</table>

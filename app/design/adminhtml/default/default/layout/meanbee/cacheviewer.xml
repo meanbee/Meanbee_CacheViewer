@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layout>
+    <adminhtml_meanbee_cacheviewer_report>
+        <reference name="content">
+            <block type="cacheviewer/adminhtml_report" name="meanbee.cacheviewer.report" template="meanbee/cacheviewer/report.phtml" />
+        </reference>
+    </adminhtml_meanbee_cacheviewer_report>
+</layout>
