@@ -13,7 +13,7 @@
     clear: both;
 }
 
-.cacheview-piechart, .cacheview-stats {
+.cacheview-piechart, .cacheview-statistics-wrapper {
     float: left;
 }
 
@@ -28,4 +28,12 @@
 .cacheview-report tr:hover {
     background: #eee;
     cursor: pointer;
+}
+
+.cacheview-statistics td, .cacheview-statistics th {
+    padding: 3px;
+}
+
+.cacheview-statistics tfoot tr td {
+    border-top: 1px double black;
 }

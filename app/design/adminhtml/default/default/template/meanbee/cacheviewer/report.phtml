@@ -2,11 +2,25 @@
 
 <div id="piechart_3d" class="cacheview-piechart" style="width: 300px; height: 300px;"></div>
 
-<div class="cacheview-stats">
+<div class="cacheview-statistics-wrapper">
     <h1>Cache Backend: <?php echo $this->getCacheBackend() ?></h1>
-    <p>Cache Size: <?php printf("%.2f", $this->getUsedCacheSizeInMb()) ?>mb</p>
 
-    <?php print_r($this->getCacheStatistics()) ?>
+    <table class="cacheview-statistics">
+        <tbody>
+            <?php foreach ($this->getCacheStatistics() as $name => $value): ?>
+                <tr>
+                    <th><?php echo $name ?></th>
+                    <td><?php printf("%.2fmb", ($value / 1024 / 1024)) ?></td>
+                </tr>
+            <?php endforeach ?>
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>Total</th>
+                <td><?php printf("%.2fmb", $this->getUsedCacheSizeInMb()) ?></td>
+            </tr>
+        </tfoot>
+    </table>
 </div>
 
 <table class="cacheview-report" id="cacheview-report">
