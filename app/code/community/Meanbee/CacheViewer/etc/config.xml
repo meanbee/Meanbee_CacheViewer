@@ -1,0 +1,65 @@
+<config>
+    <modules>
+        <Meanbee_CacheViewer>
+            <version>0.0.1</version>
+        </Meanbee_CacheViewer>
+    </modules>
+    <global>
+        <models>
+            <cacheviewer>
+                <class>Meanbee_CacheViewer_Model</class>
+            </cacheviewer>
+        </models>
+        <blocks>
+            <cacheviewer>
+                <class>Meanbee_CacheViewer_Block</class>
+            </cacheviewer>
+        </blocks>
+        <helpers>
+            <cacheviewer>
+                <class>Meanbee_CacheViewer_Helper</class>
+            </cacheviewer>
+        </helpers>
+    </global>
+    <frontend>
+        <routers>
+            <cacheviewer>
+                <use>standard</use>
+                <args>
+                    <frontName>cacheviewer</frontName>
+                    <module>Meanbee_CacheViewer</module>
+                </args>
+            </cacheviewer>
+        </routers>
+    </frontend>
+
+    <adminhtml>
+        <acl>
+            <resources>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <cacheviewer>
+                                            <title>Cache Viewer Settings</title>
+                                        </cacheviewer>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+    </adminhtml>
+
+    <default>
+        <cacheviewer>
+            <general>
+                <enabled>0</enabled>
+            </general>
+        </cacheviewer>
+    </default>
+</config>

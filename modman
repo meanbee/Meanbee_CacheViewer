@@ -1,0 +1,3 @@
+app/etc/modules/* app/etc/modules/
+app/code/community/Meanbee/* app/code/community/Meanbee/
+#var/connect/Meanbee_CacheViewer.xml var/connect/Meanbee_CacheViewer.xml
