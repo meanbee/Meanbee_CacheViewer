@@ -18,7 +18,7 @@ class Meanbee_CacheViewer_Model_Observer extends Mage_Core_Model_Abstract {
         /** @var Meanbee_CacheViewer_Helper_Data $helper */
         $helper = Mage::helper('cacheviewer');
 
-        if (!($block instanceof Mage_Core_Block_Template) || !$helper->isShowCacheStatusOnFrontend()) {
+        if (!$helper->isShowCacheStatusOnFrontend()) {
             return;
         }
 
@@ -42,7 +42,7 @@ class Meanbee_CacheViewer_Model_Observer extends Mage_Core_Model_Abstract {
         // Get transport object passed through event and wrap out hints around it.
         $html = $transportObject->getHtml();
         $html = <<<HTML
-<div class="cacheviewer-container">
+<div class="cacheviewer-container clearer">
     <div class="cacheviewer-block{$cacheClass}" onmouseover="this.style.zIndex='999'" onmouseout="this.style.zIndex='998'">
         <div class="cacheviewer-hints">
             <span class="cacheviewer-lastmodified">{$lastModified}</span>
