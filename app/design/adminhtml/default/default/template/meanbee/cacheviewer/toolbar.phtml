@@ -14,4 +14,14 @@
             </label>
         </li>
     </ul>
+    <ul class="right">
+        <li id="cacheviewer-dispatch-time"></li>
+    </ul>
 </div>
+<script type="text/javascript">
+    cacheviewer_cookies = new Meanbee.Cacheviewer.Cookies({
+        path: "<?php echo $this->getCookiePath() ?>",
+        domain: "<?php echo $this->getCookieDomain() ?>"
+    });
+</script>
+

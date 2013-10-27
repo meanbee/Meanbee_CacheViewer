@@ -4,6 +4,6 @@ app/design/adminhtml/default/default/layout/meanbee/ app/design/adminhtml/defaul
 app/design/adminhtml/default/default/template/meanbee/ app/design/adminhtml/default/default/template/meanbee
 app/design/frontend/base/default/layout/meanbee/ app/design/frontend/base/default/layout/meanbee
 app/design/frontend/base/default/template/meanbee/ app/design/frontend/base/default/template/meanbee
+js/meanbee/cacheviewer/ js/meanbee/cacheviewer
 skin/adminhtml/default/default/meanbee/cacheviewer skin/adminhtml/default/default/meanbee/cacheviewer
-skin/frontend/base/default/meanbee/cacheviewer skin/frontend/base/default/meanbee/cacheviewer
 var/connect/Meanbee_CacheViewer.xml var/connect/Meanbee_CacheViewer.xml
