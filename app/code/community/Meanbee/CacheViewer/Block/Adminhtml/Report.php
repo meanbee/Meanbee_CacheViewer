@@ -168,4 +168,17 @@ class Meanbee_CacheViewer_Block_Adminhtml_Report extends Mage_Adminhtml_Block_Te
 
         return $cache_tag_sizes;
     }
+
+    public function getCacheStatisticsGoogleChartsFormat()
+    {
+        $data_structure = array();
+
+        $data_structure[] = array('Cache Type', 'Usage');
+
+        foreach ($this->getCacheStatistics() as $name => $value) {
+            $data_structure[] = array($name, $value);
+        }
+
+        return $data_structure;
+    }
 }
