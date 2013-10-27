@@ -1,5 +1,17 @@
 <?xml version="1.0"?>
 <layout>
+    <default>
+        <reference name="head">
+            <action method="addItem"><type>js</type><name>meanbee/cacheviewer/Cookies.js</name></action>
+            <action method="addItem"><type>js</type><name>meanbee/cacheviewer/block.js</name></action>
+            <action method="addItem"><type>js_css</type><name>meanbee/cacheviewer/block.css</name></action>
+        </reference>
+
+        <reference name="before_body_end">
+            <block type="cacheviewer/toolbar" name="meanbee.cacheviewer.toolbar" template="meanbee/cacheviewer/toolbar.phtml"/>
+        </reference>
+    </default>
+
     <adminhtml_meanbee_cacheviewer_report>
         <reference name="head">
             <action method="addItem">

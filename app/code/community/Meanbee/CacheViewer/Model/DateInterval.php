@@ -6,6 +6,10 @@
  */
 class Meanbee_CacheViewer_Model_DateInterval extends DateInterval {
 
+    /**
+     * @param $seconds
+     * @return Meanbee_CacheViewer_Model_DateInterval
+     */
     public static function createFromSeconds($seconds)
     {
         if ($seconds > 0) {

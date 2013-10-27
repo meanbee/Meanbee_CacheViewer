@@ -50,6 +50,9 @@ class Meanbee_CacheViewer_Model_CacheItemInfo extends Varien_Object
         return new Zend_Date(parent::getModified());
     }
 
+    /**
+     * @return Zend_Date
+     */
     public function getExpires()
     {
         return new Zend_Date(parent::getExpires());

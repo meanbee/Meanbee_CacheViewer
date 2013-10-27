@@ -1,6 +1,6 @@
 <?php /** @var Meanbee_CacheViewer_Block_Adminhtml_Report $this */ ?>
 
-<div id="piechart_3d" class="cacheview-piechart" style="width: 300px; height: 300px;"></div>
+<div id="cache_data_piechart" class="cacheview-piechart" style="width: 300px; height: 300px;"></div>
 
 <div class="cacheview-statistics-wrapper">
     <h1>Cache Backend: <?php echo $this->getCacheBackend() ?></h1>
@@ -40,7 +40,7 @@
         <?php $now = time() ?>
         <?php foreach ($this->getCacheItems() as $item): ?>
             <?php /** @var Meanbee_CacheViewer_Model_CacheItemInfo $item */ ?>
-            <tr id="cache_<?php echo $item->getId() ?>" onclick="return loadCacheData('<?php echo $item->getId() ?>', 'cache_<?php echo $item->getId() ?>_view')">
+            <tr class="action-fetch" data-cache-id="<?php echo $item->getId() ?>" data-output-target="cache_<?php echo $item->getId() ?>_view">
                 <td class="col-id"><?php echo $item->getId() ?></td>
                 <td class="col-modified"><?php echo $this->formatDate($item->getModified(), Mage_Core_Model_Locale::FORMAT_TYPE_SHORT, true) ?></td>
                 <td class="col-expires"><?php echo $this->formatDate($item->getExpires(), Mage_Core_Model_Locale::FORMAT_TYPE_SHORT, true) ?></td>
@@ -48,12 +48,11 @@
                 <td class="col-size"><?php printf("%.2f", $item->getSizeAsKb()) ?>kb</td>
                 <td class="col-tags"><?php echo join('<br />', $item->getTags()) ?></td>
                 <td class="col-actions">
-                    <a href="#" onclick="return loadCacheData('<?php echo $item->getId() ?>', 'cache_<?php echo $item->getId() ?>_view')">Toggle View</a>
-                    <a href="#" onclick="return deleteCacheData('<?php echo $item->getId() ?>')">Delete Item</a>
+                    <a href="#" data-cache-id="<?php echo $item->getId() ?>" class="action-delete">Delete Item</a>
                 </td>
             </tr>
             <tr id="cache_<?php echo $item->getId() ?>_view">
-                <td colspan="7" class="code" style="display: none;">Loading..</td>
+                <td colspan="7" class="code" style="display: none;" data-placeholder="Loading.."></td>
             </tr>
         <?php endforeach ?>
         </tbody>
@@ -61,54 +60,14 @@
 </div>
 
 <script type="text/javascript">
-    function loadCacheData(cache_id, cache_view_id) {
-        var cache_view_el = $$('#' + cache_view_id + ' td').first();
-        cache_view_el.toggle();
+    (function () {
+        var piechart_data = <?php echo Zend_Json::encode($this->getCacheStatisticsGoogleChartsFormat()) ?>;
 
-        if (cache_view_el.style.display != 'none') {
-            new Ajax.Request('<?php echo $this->getUrl('adminhtml/meanbee_cacheviewer/view_single') ?>?cache_id='+cache_id, {
-                method: 'post',
-                onSuccess: function (response) {
-                    cache_view_el.innerHTML = response.responseText;
-                }
-            });
-        }
-
-        return false;
-    }
-
-    function deleteCacheData(cache_id) {
-        if (confirm('Are you sure you want to delete this cache item?')) {
-            new Ajax.Request('<?php echo $this->getUrl('adminhtml/meanbee_cacheviewer/delete_single') ?>?cache_id='+cache_id, {
-                method: 'post',
-                onSuccess: function () {
-                    window.location.reload()
-                }
-            });
-        }
-
-        return false;
-    }
+        Meanbee_CacheViewer_Admin_Report(
+            '<?php echo $this->getUrl('adminhtml/meanbee_cacheviewer/view_single') ?>',
+            '<?php echo $this->getUrl('adminhtml/meanbee_cacheviewer/delete_single') ?>',
+            $('cache_data_piechart'),
+            piechart_data
+        );
+    })();
 </script>
-
-<script type="text/javascript">
-    google.load("visualization", "1", {packages:["corechart"]});
-    google.setOnLoadCallback(function () {
-        var data = google.visualization.arrayToDataTable([
-            ['Cache Type', 'Usage'],
-            <?php foreach ($this->getCacheStatistics() as $name => $value): ?>
-                ['<?php echo $name ?>', <?php echo $value ?>],
-            <?php endforeach ?>
-        ]);
-
-        var options = {
-            title: 'Reported Cache Usage',
-            legend: 'none',
-            is3D: true
-        };
-
-        var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
-        chart.draw(data, options);
-    });
-</script>
-

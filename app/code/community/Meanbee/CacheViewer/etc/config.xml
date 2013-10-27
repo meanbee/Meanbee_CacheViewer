@@ -1,7 +1,7 @@
 <config>
     <modules>
         <Meanbee_CacheViewer>
-            <version>0.1.0</version>
+            <version>0.2.0</version>
         </Meanbee_CacheViewer>
     </modules>
     <global>
@@ -20,6 +20,35 @@
                 <class>Meanbee_CacheViewer_Helper</class>
             </cacheviewer>
         </helpers>
+        <events>
+            <core_block_abstract_to_html_after>
+                <observers>
+                    <cacheviewer_hints_block_after>
+                        <type>singleton</type>
+                        <class>cacheviewer/observer</class>
+                        <method>addBlockCacheStatuses</method>
+                    </cacheviewer_hints_block_after>
+                </observers>
+            </core_block_abstract_to_html_after>
+            <controller_action_predispatch>
+                <observers>
+                    <cacheviewer_pre_dispatch>
+                        <type>singleton</type>
+                        <class>cacheviewer/observer</class>
+                        <method>startTimer</method>
+                    </cacheviewer_pre_dispatch>
+                </observers>
+            </controller_action_predispatch>
+            <controller_action_postdispatch>
+                <observers>
+                    <cacheviewer_post_dispatch>
+                        <type>singleton</type>
+                        <class>cacheviewer/observer</class>
+                        <method>stopTimer</method>
+                    </cacheviewer_post_dispatch>
+                </observers>
+            </controller_action_postdispatch>
+        </events>
     </global>
 
     <admin>
@@ -41,7 +70,7 @@
                     <cache>
                         <children>
                             <cacheviewer translate="title">
-                                <title>View Cache</title>
+                                <title>View Cache Contents</title>
                                 <action>adminhtml/meanbee_cacheviewer/report</action>
                                 <sort_order>10</sort_order>
                             </cacheviewer>
@@ -79,11 +108,21 @@
         </layout>
     </adminhtml>
 
+    <frontend>
+        <layout>
+            <updates>
+                <cacheviewer>
+                    <file>meanbee/cacheviewer.xml</file>
+                </cacheviewer>
+            </updates>
+        </layout>
+    </frontend>
+
     <default>
         <cacheviewer>
-            <general>
-                <enabled>0</enabled>
-            </general>
+            <blocks>
+                <view_frontend>0</view_frontend>
+            </blocks>
         </cacheviewer>
     </default>
 </config>

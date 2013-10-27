@@ -1,8 +1,21 @@
 <?php
 class Meanbee_CacheViewer_Block_Adminhtml_Report extends Mage_Adminhtml_Block_Template
 {
+    /**
+     * @var null
+     */
     public $_total_cache_size_bytes = null;
+
+    /**
+     * @var array
+     */
     public $_cache_items = array();
+
+    /**
+     * Regular expressions used to organise tags into groups.
+     *
+     * @var array
+     */
     public $_cache_types = array(
         "Block HTML" => array(
             "/BLOCK_HTML$/"
@@ -18,6 +31,9 @@ class Meanbee_CacheViewer_Block_Adminhtml_Report extends Mage_Adminhtml_Block_Te
         )
     );
 
+    /**
+     *
+     */
     public function _construct()
     {
         parent::_construct();
@@ -27,6 +43,9 @@ class Meanbee_CacheViewer_Block_Adminhtml_Report extends Mage_Adminhtml_Block_Te
         }
     }
 
+    /**
+     * @return Meanbee_CacheViewer_Model_CacheItemInfo[]
+     */
     public function getCacheItems()
     {
         if (count($this->_cache_items) == 0) {
@@ -100,7 +119,7 @@ class Meanbee_CacheViewer_Block_Adminhtml_Report extends Mage_Adminhtml_Block_Te
     }
 
     /**
-     * @return int
+     * @return double
      */
     public function getUsedCacheSizeInMb()
     {
@@ -112,7 +131,7 @@ class Meanbee_CacheViewer_Block_Adminhtml_Report extends Mage_Adminhtml_Block_Te
     }
 
     /**
-     * @return int
+     * @return double
      */
     public function getTotalCacheSizeInMb()
     {
@@ -135,6 +154,9 @@ class Meanbee_CacheViewer_Block_Adminhtml_Report extends Mage_Adminhtml_Block_Te
         return get_class($this->_getCache()->getBackend());
     }
 
+    /**
+     * @return array
+     */
     public function getCacheStatistics()
     {
         $cache_tag_sizes = array();
@@ -167,5 +189,21 @@ class Meanbee_CacheViewer_Block_Adminhtml_Report extends Mage_Adminhtml_Block_Te
         }
 
         return $cache_tag_sizes;
+    }
+
+    /**
+     * @return array
+     */
+    public function getCacheStatisticsGoogleChartsFormat()
+    {
+        $data_structure = array();
+
+        $data_structure[] = array('Cache Type', 'Usage');
+
+        foreach ($this->getCacheStatistics() as $name => $value) {
+            $data_structure[] = array($name, $value);
+        }
+
+        return $data_structure;
     }
 }

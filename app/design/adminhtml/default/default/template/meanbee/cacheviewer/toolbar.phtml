@@ -1,0 +1,27 @@
+<div class="cacheviewer-toolbar">
+    <h3><?php echo $this->__('Cache Viewer') ?></h3>
+    <ul class="cacheviewer-controls">
+        <li class="cacheviewer-control">
+            <label for="cacheviewer-enable">
+                <?php echo $this->__('Enable') ?>
+                <input id="cacheviewer-enable" name="enable" type="checkbox" />
+            </label>
+        </li>
+        <li class="cacheviewer-control">
+            <label for="cacheviewer-hints">
+                <?php echo $this->__('Add Hints') ?>
+                <input id="cacheviewer-hints" name="hints" type="checkbox" />
+            </label>
+        </li>
+    </ul>
+    <ul class="right">
+        <li id="cacheviewer-dispatch-time"></li>
+    </ul>
+</div>
+<script type="text/javascript">
+    cacheviewer_cookies = new Meanbee.Cacheviewer.Cookies({
+        path: "<?php echo $this->getCookiePath() ?>",
+        domain: "<?php echo $this->getCookieDomain() ?>"
+    });
+</script>
+
