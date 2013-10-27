@@ -70,7 +70,7 @@
                     <cache>
                         <children>
                             <cacheviewer translate="title">
-                                <title>View Cache</title>
+                                <title>View Cache Contents</title>
                                 <action>adminhtml/meanbee_cacheviewer/report</action>
                                 <sort_order>10</sort_order>
                             </cacheviewer>
