@@ -2,14 +2,9 @@
 <layout>
     <default>
         <reference name="head">
-            <action method="addItem">
-                <type>skin_css</type>
-                <name>meanbee/cacheviewer/block.css</name>
-            </action>
-            <action method="addItem">
-                <type>skin_js</type>
-                <name>meanbee/cacheviewer/block.js</name>
-            </action>
+            <action method="addItem"><type>js</type><name>meanbee/cacheviewer/Cookies.js</name></action>
+            <action method="addItem"><type>js</type><name>meanbee/cacheviewer/block.js</name></action>
+            <action method="addItem"><type>js_css</type><name>meanbee/cacheviewer/block.css</name></action>
         </reference>
 
         <reference name="before_body_end">
