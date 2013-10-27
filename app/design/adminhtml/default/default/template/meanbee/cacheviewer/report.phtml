@@ -48,7 +48,6 @@
                 <td class="col-size"><?php printf("%.2f", $item->getSizeAsKb()) ?>kb</td>
                 <td class="col-tags"><?php echo join('<br />', $item->getTags()) ?></td>
                 <td class="col-actions">
-                    <a href="#" onclick="return loadCacheData('<?php echo $item->getId() ?>', 'cache_<?php echo $item->getId() ?>_view')">Toggle View</a>
                     <a href="#" onclick="return deleteCacheData('<?php echo $item->getId() ?>')">Delete Item</a>
                 </td>
             </tr>
