@@ -24,13 +24,15 @@ class Meanbee_CacheViewer_Model_Observer extends Mage_Core_Model_Abstract {
     public function addBlockCacheStatuses(Varien_Event_Observer $observer) {
         $event = $observer->getEvent();
         $block = $event->getBlock();
+        $parent_block = $block->getParentBlock();
         $transportObject = $event->getTransport();
 
         if (!$this->_helper->isShowCacheStatusOnFrontend()) {
             return;
         }
 
-        if (in_array(get_class($block), array("Mage_Page_Block_Html", "Mage_Adminhtml_Block_Page"))) {
+        if (in_array($block->getNameInLayout(), array("root", "head")) ||
+            ($parent_block && $parent_block->getNameInLayout() == "head")) {
             return;
         }
 
