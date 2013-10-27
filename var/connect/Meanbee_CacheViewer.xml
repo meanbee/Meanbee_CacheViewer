@@ -1,5 +1,5 @@
 <_>
-   <form_key>WEWjDY9HtzFFz7vE</form_key>
+   <form_key>K4WFEUDWKoLAhAuF</form_key>
    <name>Meanbee_CacheViewer</name>
    <channel>community</channel>
    <version_ids>
@@ -9,9 +9,9 @@
    <description>Analyse the contents of your Magento cache.</description>
    <license>GNU GPL v3</license>
    <license_uri>http://www.gnu.org/licenses/gpl.html</license_uri>
-   <version>0.1.0</version>
+   <version>0.2.0</version>
    <stability>stable</stability>
-   <notes>Initial release.</notes>
+   <notes>Visually identify your blocks with block cache enabled.</notes>
    <authors>
       <name>
          <name>Meanbee</name>
@@ -40,7 +40,7 @@
             <max/>
          </max>
          <files>
-            <files>  </files>
+            <files>     </files>
          </files>
       </package>
       <extension>
@@ -59,24 +59,33 @@
       <target>
          <target>magelocal</target>
          <target>magecommunity</target>
+         <target>mageetc</target>
          <target>magedesign</target>
          <target>magedesign</target>
          <target>magedesign</target>
+         <target>magelocal</target>
+         <target>mageweb</target>
          <target>mageskin</target>
       </target>
       <path>
          <path/>
          <path>Meanbee/CacheViewer</path>
          <path>modules/Meanbee_CacheViewer.xml</path>
-         <path>adminhtml/default/default/layout/meanbee/cacheviewer/</path>
+         <path>adminhtml/default/default/layout/meanbee/cacheviewer.xml</path>
          <path>adminhtml/default/default/template/meanbee/cacheviewer/</path>
-         <path>adminhtml/default/default/meanbee/cacheviewer/</path>
+         <path>frontend/base/default/template/meanbee/cacheviewer/</path>
+         <path>frontend/base/default/layout/meanbee/cacheviewer.xml</path>
+         <path>js/meanbee/cacheviewer/</path>
+         <path>adminhtml/default/default/meanbee/cacheviewer</path>
       </path>
       <type>
          <type>file</type>
          <type>dir</type>
          <type>file</type>
+         <type>file</type>
          <type>dir</type>
+         <type>dir</type>
+         <type>file</type>
          <type>dir</type>
          <type>dir</type>
       </type>
@@ -87,8 +96,14 @@
          <include/>
          <include/>
          <include/>
+         <include/>
+         <include/>
+         <include/>
       </include>
       <ignore>
+         <ignore/>
+         <ignore/>
+         <ignore/>
          <ignore/>
          <ignore/>
          <ignore/>
